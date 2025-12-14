@@ -49,6 +49,12 @@ Fitur pencatatan setoran yang dilakukan driver setelah menerima sampah dari kont
 
 ---
 
+### Alur Layanan Reguler
+
+![Regular Service Flow](./assets/bpmn/regular-service.jpg)
+
+---
+
 ## 3.3 Feature: Permintaan Layanan Khusus
 
 ### 3.3.1 Description
@@ -114,6 +120,12 @@ Proses pencatatan dan validasi sampah yang diserahkan dalam layanan penjemputan 
 
 ---
 
+### Alur Layanan Khusus
+
+![Regular Service Flow](./assets/bpmn/customized-service.jpg)
+
+---
+
 ## 3.6 Feature: Inisiasi & Manajemen Kemitraan
 
 ### 3.6.1 Description
@@ -132,6 +144,12 @@ Kemampuan sistem untuk mengelola pendaftaran, persetujuan, dan pemantauan kemitr
 - **FR-F16-2** Sistem harus memungkinkan admin meninjau dan menyetujui pengajuan.
 - **FR-F16-3** Sistem harus menyimpan status dan riwayat kemitraan.
 - **FR-F16-4** Sistem harus menyediakan tampilan monitoring status kemitraan.
+
+---
+
+### Alur Manajemen Kemitraan
+
+![Alur Manajemen Kemitraan](./assets/bpmn/partnership-service.jpg)
 
 ---
 
@@ -157,6 +175,12 @@ Manajemen workshop termasuk publikasi jadwal, pendaftaran peserta, dan monitorin
 
 ---
 
+### Alur Pemantauan Workshop
+
+![Alur Pemantauan Workshop](./assets/bpmn/workshop-service.jpg)
+
+---
+
 ## 3.8 Feature: Fasilitas Pengumpulan di Lokasi Mitra
 
 ### 3.8.1 Description
@@ -178,39 +202,26 @@ Manajemen titik pengumpulan sampah di lokasi mitra dan pemantauan jadwal penjemp
 
 ---
 
-## 3.9 Feature: Pusat Pengetahuan Daring
+### Alur Fasilitas Pengumpulan di Lokasi Mitra
 
-### 3.9.1 Description
-
-Sistem menyediakan konten edukasi berupa artikel, modul, atau media lain.
-
-### 3.9.2 Related User Stories
-
-- US52 — User mengakses konten edukasi.
-- US54 — Admin mengunggah dan memperbarui konten.
-
-### 3.9.3 Functional Requirements
-
-- **FR-F22-1** Sistem harus menampilkan daftar konten edukasi daring.
-- **FR-F22-2** Sistem harus memungkinkan admin mengunggah konten.
-- **FR-F22-3** Sistem harus memungkinkan admin memperbarui konten.
-- **FR-F22-4** Sistem harus menyimpan riwayat versi konten.
+![Alur Fasilitas Pengumpulan di Lokasi Mitra](./assets/bpmn/collect-facility-service.jpg)
 
 ---
 
-## 3.10 Feature: Pengelolaan Sistem Poin
 
-### 3.10.1 Description
+## 3.9 Feature: Pengelolaan Sistem Poin
+
+### 3.9.1 Description
 
 Pengelolaan mekanisme pemberian dan akumulasi poin atas kontribusi.
 
-### 3.10.2 Related User Stories
+### 3.9.2 Related User Stories
 
 - US40 — Kontributor mendapatkan poin.
 - US42 — Kontributor melihat akumulasi poin.
 - US44 — Admin mengatur tata cara pemberian poin.
 
-### 3.10.3 Functional Requirements
+### 3.9.3 Functional Requirements
 
 - **FR-F17-1** Sistem harus mencatat poin berdasarkan aktivitas kontribusi.
 - **FR-F17-2** Sistem harus menampilkan total poin kepada kontributor.
@@ -219,17 +230,17 @@ Pengelolaan mekanisme pemberian dan akumulasi poin atas kontribusi.
 
 ---
 
-## 3.11 Feature: Pengakuan & Peringkat
+## 3.10 Feature: Pengakuan & Peringkat
 
-### 3.11.1 Description
+### 3.10.1 Description
 
 Fitur yang menyediakan papan peringkat kontribusi komunitas.
 
-### 3.11.2 Related User Stories
+### 3.10.2 Related User Stories
 
 - US46 — Kontributor melihat peringkat kontribusi.
 
-### 3.11.3 Functional Requirements
+### 3.10.3 Functional Requirements
 
 - **FR-F18-1** Sistem harus menampilkan peringkat kontribusi semua kontributor.
 - **FR-F18-2** Sistem harus memperbarui peringkat secara periodik atau real-time.
@@ -237,18 +248,18 @@ Fitur yang menyediakan papan peringkat kontribusi komunitas.
 
 ---
 
-## 3.12 Feature: Interaksi & Notifikasi Personal
+## 3.11 Feature: Interaksi & Notifikasi Personal
 
-### 3.12.1 Description
+### 3.11.1 Description
 
 Fitur pengingat, ucapan terima kasih, dan notifikasi personal.
 
-### 3.12.2 Related User Stories
+### 3.11.2 Related User Stories
 
 - US53 — Pengingat penjemputan.
 - US55 — Ucapan terima kasih personal.
 
-### 3.12.3 Functional Requirements
+### 3.11.3 Functional Requirements
 
 - **FR-F21-1** Sistem harus mengirim pengingat penjemputan kepada kontributor.
 - **FR-F21-2** Sistem harus mengirim ucapan terima kasih setelah aktivitas kontribusi.
@@ -256,19 +267,19 @@ Fitur pengingat, ucapan terima kasih, dan notifikasi personal.
 
 ---
 
-## 3.13 Feature: Profil Kontribusi Individu
+## 3.12 Feature: Profil Kontribusi Individu
 
-### 3.13.1 Description
+### 3.12.1 Description
 
 Ringkasan dampak, riwayat kontribusi, dan kemampuan berbagi profil.
 
-### 3.13.2 Related User Stories
+### 3.12.2 Related User Stories
 
 - US56 — Riwayat kontribusi pribadi.
 - US57 — Membagikan profil kontribusi.
 - US58 — Melihat profil kontributor lain.
 
-### 3.13.3 Functional Requirements
+### 3.12.3 Functional Requirements
 
 - **FR-F23-1** Sistem harus menampilkan riwayat kontribusi pengguna.
 - **FR-F23-2** Sistem harus memungkinkan pengguna membagikan profil kontribusi.
@@ -277,19 +288,19 @@ Ringkasan dampak, riwayat kontribusi, dan kemampuan berbagi profil.
 
 ---
 
-## 3.14 Feature: Analitik Operasional
+## 3.13 Feature: Analitik Operasional
 
-### 3.14.1 Description
+### 3.13.1 Description
 
 Visualisasi dan rangkuman data operasional untuk pemantauan internal.
 
-### 3.14.2 Related User Stories
+### 3.13.2 Related User Stories
 
 - US26 — Admin memantau data pengelolaan sampah.
 - US27 — Admin melihat tingkat partisipasi reguler & khusus.
 - US29 — Admin melihat tingkat partisipasi kegiatan eventual.
 
-### 3.14.3 Functional Requirements
+### 3.13.3 Functional Requirements
 
 - **FR-F12-1** Sistem harus menyediakan dashboard operasional.
 - **FR-F12-2** Sistem harus menampilkan grafik partisipasi kontributor.
@@ -298,17 +309,17 @@ Visualisasi dan rangkuman data operasional untuk pemantauan internal.
 
 ---
 
-## 3.15 Feature: Distribusi dan Ekspor Data
+## 3.14 Feature: Distribusi dan Ekspor Data
 
-### 3.15.1 Description
+### 3.14.1 Description
 
 Kemampuan ekspor data ke format PDF atau CSV.
 
-### 3.15.2 Related User Stories
+### 3.14.2 Related User Stories
 
 - US32 — Admin mengekspor laporan data.
 
-### 3.15.3 Functional Requirements
+### 3.14.3 Functional Requirements
 
 - **FR-F15-1** Sistem harus mengekspor laporan ke format PDF.
 - **FR-F15-2** Sistem harus mengekspor laporan ke format CSV.
@@ -317,19 +328,19 @@ Kemampuan ekspor data ke format PDF atau CSV.
 
 ---
 
-## 3.16 Feature: Autentikasi Pengguna
+## 3.15 Feature: Autentikasi Pengguna
 
-### 3.16.1 Description
+### 3.15.1 Description
 
 Identifikasi pengguna dan pembaruan kredensial.
 
-### 3.16.2 Related User Stories
+### 3.15.2 Related User Stories
 
 - US71 — Pengguna dikenali sistem (login).
 - US72 — Pengguna menghapus sesi (logout).
 - US75 — Pengguna memperbarui kredensial.
 
-### 3.16.3 Functional Requirements
+### 3.15.3 Functional Requirements
 
 - **FR-F69-1** Sistem harus memungkinkan login menggunakan kredensial valid.
 - **FR-F69-2** Sistem harus mendukung mekanisme logout.
@@ -338,18 +349,18 @@ Identifikasi pengguna dan pembaruan kredensial.
 
 ---
 
-## 3.17 Feature: Autorisasi Pengguna
+## 3.16 Feature: Autorisasi Pengguna
 
-### 3.17.1 Description
+### 3.16.1 Description
 
 Pengaturan kewenangan pengguna sesuai peran.
 
-### 3.17.2 Related User Stories
+### 3.16.2 Related User Stories
 
 - US73 — Pengguna diberikan otoritas sesuai peran.
 - US74 — Admin mengatur otoritas pengguna.
 
-### 3.17.3 Functional Requirements
+### 3.16.3 Functional Requirements
 
 - **FR-F70-1** Sistem harus menetapkan akses berdasarkan peran pengguna.
 - **FR-F70-2** Sistem harus memungkinkan admin mengelola otorisasi setiap pengguna.
