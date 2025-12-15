@@ -244,7 +244,6 @@ Fitur yang menyediakan papan peringkat kontribusi komunitas.
 
 - **FR-F18-1** Sistem harus menampilkan peringkat kontribusi semua kontributor.
 - **FR-F18-2** Sistem harus memperbarui peringkat secara periodik atau real-time.
-- **FR-F18-3** Sistem harus mendukung filter atau kategori kontribusi.
 
 ---
 
@@ -263,7 +262,6 @@ Fitur pengingat, ucapan terima kasih, dan notifikasi personal.
 
 - **FR-F21-1** Sistem harus mengirim pengingat penjemputan kepada kontributor.
 - **FR-F21-2** Sistem harus mengirim ucapan terima kasih setelah aktivitas kontribusi.
-- **FR-F21-3** Sistem harus memiliki log notifikasi yang dapat diaudit.
 
 ---
 
@@ -365,4 +363,3 @@ Pengaturan kewenangan pengguna sesuai peran.
 - **FR-F70-1** Sistem harus menetapkan akses berdasarkan peran pengguna.
 - **FR-F70-2** Sistem harus memungkinkan admin mengelola otorisasi setiap pengguna.
 - **FR-F70-3** Sistem harus memberikan akses hanya kepada pengguna yang berhak.
-- **FR-F70-4** Sistem harus menyediakan audit trail perubahan otorisasi.

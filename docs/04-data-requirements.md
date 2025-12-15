@@ -1,12 +1,12 @@
 # 4. Data Requirements
 
-Bagian ini menjelaskan kebutuhan data untuk platform Nafas Bumi, termasuk model data logis, definisi setiap entitas, kebutuhan laporan, serta ketentuan integritas dan retensi data.
+Bab ini mendefinisikan kebutuhan data untuk platform Nafas Bumi, mencakup model data logis, definisi entitas, kebutuhan pelaporan, serta ketentuan terkait integritas dan retensi data.
 
 ---
 
 ## 4.1 Logical Data Model
 
-Model data logis berikut dibangun berdasarkan seluruh fitur pada Chapter 3 dan interaksi yang muncul dalam backlog.
+Model data logis disusun berdasarkan fitur-fitur sistem yang didefinisikan pada Chapter 3 serta interaksi yang tercermin dalam backlog kebutuhan.
 
 ### **Daftar Entitas Utama**
 
@@ -21,22 +21,43 @@ Model data logis berikut dibangun berdasarkan seluruh fitur pada Chapter 3 dan i
 9. **Workshop**
 10. **WorkshopRegistration**
 11. **PointsTransaction**
-12. **LeaderboardEntry**
-13. **NotificationLog**
-14. **AnalyticsSnapshot**
-15. **ExportHistory**
+12. **PointRule**
+13. **LeaderboardEntry**
+14. **ContributionProfile**
+15. **SessionLog**
+16. **AnalyticsSnapshot**
+17. **ExportHistory**
 
 ### **Relationship Overview**
 
+#### **Autentikasi & Autorisasi**
 - Satu **User** dapat memiliki satu atau lebih **Role**.
-- Satu **User (kontributor)** dapat membuat banyak **WastePickupRequest**.
+- Setiap login **User** menciptakan **SessionLog** untuk tracking keamanan.
+
+#### **Layanan Pengumpulan Sampah**
+- Satu **User (kontributor)** dapat membuat banyak **WastePickupRequest** (reguler & khusus).
 - Satu **Schedule** digunakan untuk layanan reguler dan terhubung ke banyak **Assignment**.
 - Satu **Driver (User)** dapat menerima banyak **Assignment**.
 - Setiap **Assignment** menghasilkan satu atau lebih **WasteRecord**.
+
+#### **Kemitraan & Fasilitas**
 - **Partner** memiliki satu atau beberapa **PartnerFacility**.
-- User dapat mendaftar ke banyak **Workshop** melalui **WorkshopRegistration**.
-- Aktivitas kontribusi menghasilkan **PointsTransaction** dan juga memengaruhi **LeaderboardEntry**.
-- Semua aktivitas penting menghasilkan catatan di **NotificationLog**.
+- **PartnerFacility** dapat menjadi lokasi penjemputan dalam **WastePickupRequest**.
+
+#### **Workshop & Edukasi**
+- **User** dapat mendaftar ke banyak **Workshop** melalui **WorkshopRegistration**.
+- Setiap **Workshop** dapat memiliki banyak peserta melalui **WorkshopRegistration**.
+
+#### **Sistem Poin & Gamifikasi**
+- Aktivitas kontribusi menghasilkan **PointsTransaction** berdasarkan **PointRule**.
+- **PointsTransaction** mempengaruhi skor di **LeaderboardEntry**.
+- Setiap **User** memiliki satu **ContributionProfile** yang merangkum dampak kontribusi.
+
+#### **Notifikasi & Interaksi**
+- Sistem mengirim push notification real-time menggunakan layanan FCM/APNs.
+- Push notification tidak disimpan dalam database.
+
+#### **Analitik & Pelaporan**
 - Sistem secara periodik menyimpan ringkasan operasional di **AnalyticsSnapshot**.
 - Administrator dapat mengekspor data, dicatat dalam **ExportHistory**.
 
@@ -46,17 +67,19 @@ Model data logis berikut dibangun berdasarkan seluruh fitur pada Chapter 3 dan i
 
 ### **Tabel 1 — User**
 
-| Field         | Type      | Description           |
-| ------------- | --------- | --------------------- |
-| user_id       | UUID      | ID unik pengguna      |
-| name          | String    | Nama pengguna         |
-| email         | String    | Email login           |
-| phone         | String    | Nomor telepon         |
-| password_hash | String    | Hash kata sandi       |
-| role_id       | FK        | Role pengguna         |
-| address       | String    | Alamat rumah          |
-| created_at    | Timestamp | Waktu akun dibuat     |
-| updated_at    | Timestamp | Waktu data diperbarui |
+| Field              | Type                                    | Description           |
+| ------------------ | --------------------------------------- | --------------------- |
+| user_id            | UUID                                    | ID unik pengguna      |
+| name               | String                                  | Nama pengguna         |
+| email              | String                                  | Email login           |
+| phone              | String                                  | Nomor telepon         |
+| password_hash      | String                                  | Hash kata sandi       |
+| role_id            | FK                                      | Role pengguna         |
+| address            | String                                  | Alamat rumah          |
+| profile_visibility | Enum(public, private, friends_only)     | Pengaturan privasi    |
+| last_login         | Timestamp                               | Waktu login terakhir  |
+| created_at         | Timestamp                               | Waktu akun dibuat     |
+| updated_at         | Timestamp                               | Waktu data diperbarui |
 
 ---
 
@@ -67,6 +90,8 @@ Model data logis berikut dibangun berdasarkan seluruh fitur pada Chapter 3 dan i
 | role_id     | UUID                                      | ID unik role     |
 | role_name   | Enum(admin, driver, contributor, partner) | Nama role        |
 | permissions | JSON                                      | Daftar hak akses |
+| created_at  | Timestamp                                 | Waktu dibuat     |
+| updated_at  | Timestamp                                 | Waktu diperbarui |
 
 ---
 
@@ -184,30 +209,62 @@ Model data logis berikut dibangun berdasarkan seluruh fitur pada Chapter 3 dan i
 
 ---
 
-### **Tabel 12 — LeaderboardEntry**
+### **Tabel 12 — PointRule**
 
-| Field          | Type    | Description |
-| -------------- | ------- | ----------- |
-| leaderboard_id | UUID    | ID entri    |
-| user_id        | FK      | Kontributor |
-| score          | Integer | Skor total  |
-| rank           | Integer | Peringkat   |
-
----
-
-### **Tabel 13 — NotificationLog**
-
-| Field             | Type                              | Description      |
-| ----------------- | --------------------------------- | ---------------- |
-| notification_id   | UUID                              | ID notifikasi    |
-| user_id           | FK                                | Pengguna         |
-| message           | Text                              | Isi pesan        |
-| sent_at           | Timestamp                         | Waktu pengiriman |
-| notification_type | Enum(reminder, thank_you, system) | Tipe notifikasi  |
+| Field         | Type      | Description          |
+| ------------- | --------- | -------------------- |
+| rule_id       | UUID      | ID aturan poin       |
+| activity_type | String    | Tipe aktivitas       |
+| points_awarded| Integer   | Poin yang diberikan  |
+| description   | Text      | Deskripsi aturan     |
+| is_active     | Boolean   | Status aktif         |
+| created_at    | Timestamp | Waktu dibuat         |
+| updated_at    | Timestamp | Waktu diperbarui     |
 
 ---
 
-### **Tabel 14 — AnalyticsSnapshot**
+### **Tabel 13 — LeaderboardEntry**
+
+| Field          | Type    | Description             |
+| -------------- | ------- | ----------------------- |
+| leaderboard_id | UUID    | ID entri                |
+| user_id        | FK      | Kontributor             |
+| score          | Integer | Skor total              |
+| rank           | Integer | Peringkat               |
+| period         | String  | Periode (bulanan/total) |
+
+---
+
+### **Tabel 14 — ContributionProfile**
+
+| Field               | Type      | Description            |
+| ------------------- | --------- | ---------------------- |
+| profile_id          | UUID      | ID profil              |
+| user_id             | FK        | Kontributor            |
+| total_contributions | Integer   | Total kontribusi       |
+| total_waste_volume  | Float     | Total volume sampah    |
+| impact_summary      | JSON      | Ringkasan dampak       |
+| share_token         | String    | Token untuk sharing    |
+| privacy_settings    | JSON      | Pengaturan privasi     |
+| created_at          | Timestamp | Waktu dibuat           |
+| updated_at          | Timestamp | Waktu diperbarui       |
+
+---
+
+### **Tabel 15 — SessionLog**
+
+| Field       | Type      | Description      |
+| ----------- | --------- | ---------------- |
+| session_id  | UUID      | ID sesi          |
+| user_id     | FK        | Pengguna         |
+| login_at    | Timestamp | Waktu login      |
+| logout_at   | Timestamp | Waktu logout     |
+| ip_address  | String    | Alamat IP        |
+| device_info | String    | Info perangkat   |
+
+---
+
+### **Tabel 16 — AnalyticsSnapshot**
 
 | Field        | Type      | Description     |
 | ------------ | --------- | --------------- |
@@ -219,7 +276,7 @@ Model data logis berikut dibangun berdasarkan seluruh fitur pada Chapter 3 dan i
 
 ---
 
-### **Tabel 15 — ExportHistory**
+### **Tabel 17 — ExportHistory**
 
 | Field         | Type           | Description           |
 | ------------- | -------------- | --------------------- |
@@ -232,7 +289,7 @@ Model data logis berikut dibangun berdasarkan seluruh fitur pada Chapter 3 dan i
 
 ## 4.3 Reports
 
-Berikut daftar laporan utama yang harus dapat dihasilkan sistem:
+Sistem harus mendukung penyusunan dan penyajian laporan utama sebagai berikut:
 
 ### **1. Laporan Pengelolaan Sampah**
 
@@ -259,9 +316,21 @@ Berikut daftar laporan utama yang harus dapat dihasilkan sistem:
 - Riwayat transaksi poin
 - Dampak kontribusi komunitas
 
-### **5. Audit & Operasional**
+### **5. Laporan Profil Kontribusi Individual**
 
-- Log notifikasi
+- Riwayat kontribusi per pengguna
+- Ringkasan dampak kontribusi (total volume, jenis sampah, periode aktif)
+- Statistik peringkat dan ranking
+- Profil kontribusi yang dibagikan
+
+### **6. Laporan Autentikasi & Keamanan**
+
+- Riwayat login/logout pengguna
+- Aktivitas sesi mencurigakan
+- Riwayat perubahan kredensial
+
+### **7. Operasional**
+
 - Riwayat ekspor data
 - Validasi setoran (driver vs admin)
 
@@ -273,7 +342,7 @@ Semua laporan harus dapat diekspor ke **PDF** atau **CSV**, sesuai backlog (US32
 
 ### **Data Acquisition**
 
-Data diperoleh melalui:
+Data sistem diperoleh melalui sumber-sumber berikut:
 
 - Input pengguna (jadwal, permintaan layanan khusus, pendaftaran workshop)
 - Input driver (catatan setoran)
@@ -282,16 +351,15 @@ Data diperoleh melalui:
 
 ### **Integrity Requirements**
 
-Berdasarkan prioritas atribut kualitas _integrity_ yang ditandai sebagai “In” dalam dokumen kualitas Anda :contentReference[oaicite:1]{index=1}:
+Berdasarkan prioritas atribut kualitas integrity yang ditetapkan dalam dokumen analisis kualitas:
 
 - Semua input harus divalidasi sebelum disimpan.
-- Harus ada **audit log** untuk perubahan penting (setoran, poin, otorisasi).
 - Data sampah tidak boleh rusak atau hilang.
 - Perbandingan driver vs admin harus konsisten.
 
 ### **Retention Requirements**
 
-Mengikuti UU PDP & PP 71/2019:
+Ketentuan retensi data ditetapkan dengan mengacu pada Undang-Undang Perlindungan Data Pribadi (UU PDP) dan Peraturan Pemerintah No. 71 Tahun 2019:
 
 - Data operasional dan log minimal disimpan **5 tahun**.
 - Data yang tidak relevan harus dihapus atau dianonimkan.
