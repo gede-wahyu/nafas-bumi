@@ -63,7 +63,7 @@ Model data logis disusun berdasarkan fitur-fitur sistem yang didefinisikan pada 
 
 ### **Entity Relationship Diagram (ERD)**
 
-![Nafas Bumi ERD](./assets/erd/Nafas%20Bumi%20ERD-2025-12-17-123909.png)
+![Nafas Bumi ERD](./assets/erd/nafas-bumi-erd.png)
 
 ---
 
