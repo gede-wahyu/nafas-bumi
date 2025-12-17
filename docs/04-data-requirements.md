@@ -61,6 +61,10 @@ Model data logis disusun berdasarkan fitur-fitur sistem yang didefinisikan pada 
 - Sistem secara periodik menyimpan ringkasan operasional di **AnalyticsSnapshot**.
 - Administrator dapat mengekspor data, dicatat dalam **ExportHistory**.
 
+### **Entity Relationship Diagram (ERD)**
+
+![Nafas Bumi ERD](./assets/erd/Nafas%20Bumi%20ERD-2025-12-17-123909.png)
+
 ---
 
 ## 4.2 Data Dictionary

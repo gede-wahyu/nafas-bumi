@@ -17,7 +17,7 @@ Bab ini mencakup persyaratan tambahan yang diperlukan untuk memastikan sistem Na
 ## 8.2 Audit and Logging Requirements
 
 - **OR-AUDIT-1** Sistem harus mencatat aktivitas penting pengguna dan administrator dalam audit log.
-- **OR-AUDIT-2** Aktivitas yang dicatat mencakup login, perubahan data penting, validasi setoran, pengaturan poin, dan perubahan otorisasi.
+- **OR-AUDIT-2** Aktivitas yang dicatat mencakup login, perubahan data penting, validasi setoran, dan pengaturan poin.
 - **OR-AUDIT-3** Audit log harus dilindungi dari pengubahan tanpa otorisasi.
 - **OR-AUDIT-4** Audit log harus dapat diakses oleh administrator berwenang untuk keperluan pemeriksaan dan pelaporan.
 - **OR-AUDIT-5** Audit log harus disimpan sesuai kebijakan retensi data.
